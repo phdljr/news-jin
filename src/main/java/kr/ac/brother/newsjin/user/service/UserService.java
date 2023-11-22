@@ -5,5 +5,5 @@ import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
 
 public interface UserService {
 
-    SignUpResponseDto signup(SignUpRequestDto requestDto);
+    SignUpResponseDto signUp(SignUpRequestDto requestDto);
 }
