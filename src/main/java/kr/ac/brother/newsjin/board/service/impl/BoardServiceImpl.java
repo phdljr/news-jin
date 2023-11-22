@@ -4,6 +4,7 @@ import kr.ac.brother.newsjin.board.dto.request.BoardRequestDto;
 import kr.ac.brother.newsjin.board.dto.response.BoardResponseDto;
 import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.board.exception.NotFoundBoardException;
+import kr.ac.brother.newsjin.board.exception.NotUpdateForUserException;
 import kr.ac.brother.newsjin.board.repository.BoardRepository;
 import kr.ac.brother.newsjin.board.service.BoardService;
 import kr.ac.brother.newsjin.user.entity.User;
@@ -35,14 +36,10 @@ public class BoardServiceImpl implements BoardService {
     public BoardResponseDto updateBoard(Long boardId, BoardRequestDto boardRequestDto, User user) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(NotFoundBoardException::new);
-        if (user.getUsername().equals(board.getUser().getUsername())) {
-            board.update(boardRequestDto);
-
-        } else {
-            throw new NotFoundBoardException();
+        if (!user.getId().equals(board.getUser().getId())) {
+            throw new NotUpdateForUserException();
         }
-
-        board = boardRepository.save(board);
+        board.update(boardRequestDto);
 
         return new BoardResponseDto(board);
     }
