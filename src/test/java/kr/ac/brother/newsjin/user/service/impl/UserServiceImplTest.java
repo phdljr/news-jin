@@ -1,9 +1,11 @@
 package kr.ac.brother.newsjin.user.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
+import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
 import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
@@ -118,5 +120,28 @@ class UserServiceImplTest {
         assertThat(responseDto).isNotNull();
         assertThat(responseDto.getIntro()).isEqualTo(changeIntro);
         assertThat(changedUser.getIntro()).isEqualTo(changeIntro);
+    }
+
+    @Test
+    @DisplayName("비밀번호를 수정한다.")
+    public void updatePasswordTest() {
+        // given
+        User user = insertUser();
+        String changePassword = "change password";
+        PasswordRequestDto requestDto = PasswordRequestDto.builder()
+            .currentPassword("testpassword")
+            .newPassword(changePassword)
+            .checkNewPassword(changePassword)
+            .build();
+
+        // when
+        userService.updatePassword(user, requestDto);
+
+        // then
+        User changedUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        assertThat(passwordEncoder.matches(changePassword, changedUser.getPassword()))
+            .isEqualTo(true);
     }
 }

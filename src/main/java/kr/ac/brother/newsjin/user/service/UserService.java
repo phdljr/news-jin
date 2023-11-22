@@ -2,6 +2,7 @@ package kr.ac.brother.newsjin.user.service;
 
 import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
+import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
 import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
@@ -18,4 +19,6 @@ public interface UserService {
     NicknameResponseDto updateNickname(User user, NicknameRequestDto requestDto);
 
     IntroResponseDto updateIntro(User user, IntroRequestDto requestDto);
+
+    void updatePassword(User user, PasswordRequestDto passwordRequestDto);
 }
