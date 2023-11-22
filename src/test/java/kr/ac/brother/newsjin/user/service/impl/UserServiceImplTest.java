@@ -1,7 +1,6 @@
 package kr.ac.brother.newsjin.user.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Optional;
 import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
