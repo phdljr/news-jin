@@ -1,14 +1,17 @@
 package kr.ac.brother.newsjin.user.service.impl;
 
 import java.util.Optional;
+import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
-import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
+import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
+import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
 import kr.ac.brother.newsjin.user.entity.User;
 import kr.ac.brother.newsjin.user.entity.UserRole;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistEmailException;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistNicknameException;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistUsernameException;
+import kr.ac.brother.newsjin.user.exception.NotFoundUserException;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
 import kr.ac.brother.newsjin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +75,28 @@ public class UserServiceImpl implements UserService {
             .nickname(user.getNickname())
             .image(user.getImage())
             .intro(user.getIntro())
+            .build();
+    }
+
+    @Override
+    @Transactional
+    public NicknameResponseDto updateNickname(
+        final User user,
+        final NicknameRequestDto nicknameRequestDto
+    ) {
+        Optional<User> findUser = userRepository.findByNickname(nicknameRequestDto.getNickname());
+        if (findUser.isPresent()) {
+            throw new AlreadyExistNicknameException();
+        }
+
+        User loginUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        loginUser.updateNickname(nicknameRequestDto.getNickname());
+
+        return NicknameResponseDto.builder()
+            .username(loginUser.getUsername())
+            .nickname(loginUser.getNickname())
             .build();
     }
 }
