@@ -2,8 +2,10 @@ package kr.ac.brother.newsjin.user.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
+import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
@@ -94,5 +96,27 @@ class UserServiceImplTest {
         assertThat(responseDto).isNotNull();
         assertThat(responseDto.getNickname()).isEqualTo(changeNickname);
         assertThat(changedUser.getNickname()).isEqualTo(changeNickname);
+    }
+
+    @Test
+    @DisplayName("한 줄 소개를 수정한다.")
+    public void updateIntroTest() {
+        // given
+        User user = insertUser();
+        String changeIntro = "change intro";
+        IntroRequestDto requestDto = IntroRequestDto.builder()
+            .intro(changeIntro)
+            .build();
+
+        // when
+        IntroResponseDto responseDto = userService.updateIntro(user, requestDto);
+
+        // then
+        User changedUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getIntro()).isEqualTo(changeIntro);
+        assertThat(changedUser.getIntro()).isEqualTo(changeIntro);
     }
 }
