@@ -6,6 +6,7 @@ import kr.ac.brother.newsjin.board.service.BoardService;
 import kr.ac.brother.newsjin.global.security.userdetails.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,9 @@ public class BoardController {
     }
 
     @PutMapping("/boards/{boardId}")
-    public BoardResponseDto updateBoard(@PathVariable Long boardId, @RequestBody BoardRequestDto boardRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return boardService.updateBoard(boardId, boardRequestDto, userDetails.getUser());
+    public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable Long boardId, @RequestBody BoardRequestDto boardRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        BoardResponseDto boardResponseDto = boardService.updateBoard(boardId, boardRequestDto, userDetails.getUser());
+        return ResponseEntity.ok(boardResponseDto);
     }
 
 }

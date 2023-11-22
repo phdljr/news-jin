@@ -3,6 +3,7 @@ package kr.ac.brother.newsjin.board.service.impl;
 import kr.ac.brother.newsjin.board.dto.request.BoardRequestDto;
 import kr.ac.brother.newsjin.board.dto.response.BoardResponseDto;
 import kr.ac.brother.newsjin.board.entity.Board;
+import kr.ac.brother.newsjin.board.exception.NotFoundBoardException;
 import kr.ac.brother.newsjin.board.repository.BoardRepository;
 import kr.ac.brother.newsjin.board.service.BoardService;
 import kr.ac.brother.newsjin.user.entity.User;
@@ -32,14 +33,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public BoardResponseDto updateBoard(Long boardId, BoardRequestDto boardRequestDto, User user) {
-        Board board = boardRepository.findById(boardId).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시글이 없습니다.")
-        );
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(NotFoundBoardException::new);
         if (user.getUsername().equals(board.getUser().getUsername())) {
             board.update(boardRequestDto);
 
         } else {
-            throw new IllegalArgumentException("작성자만 수정할 수 있습니다.");
+            throw new NotFoundBoardException();
         }
 
         board = boardRepository.save(board);
