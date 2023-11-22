@@ -2,6 +2,7 @@ package kr.ac.brother.newsjin.user.service.impl;
 
 import java.util.Optional;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
+import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
 import kr.ac.brother.newsjin.user.entity.User;
 import kr.ac.brother.newsjin.user.entity.UserRole;
@@ -13,6 +14,7 @@ import kr.ac.brother.newsjin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -61,6 +63,15 @@ public class UserServiceImpl implements UserService {
             .username(username)
             .nickname(nickname)
             .email(email)
+            .build();
+    }
+
+    @Override
+    public UserResponseDto getUserData(final User user) {
+        return UserResponseDto.builder()
+            .nickname(user.getNickname())
+            .image(user.getImage())
+            .intro(user.getIntro())
             .build();
     }
 }
