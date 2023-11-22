@@ -24,7 +24,7 @@ class UserServiceImplTest {
         // given
         SignUpRequestDto dto = SignUpRequestDto.builder()
             .username("usernametest")
-            .email("emailtest")
+            .email("email@test.com")
             .password("passwordtest")
             .nickname("nicknametest")
             .build();
