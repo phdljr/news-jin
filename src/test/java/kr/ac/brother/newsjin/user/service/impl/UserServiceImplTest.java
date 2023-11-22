@@ -1,8 +1,8 @@
 package kr.ac.brother.newsjin.user.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Optional;
 import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
@@ -143,5 +143,20 @@ class UserServiceImplTest {
 
         assertThat(passwordEncoder.matches(changePassword, changedUser.getPassword()))
             .isEqualTo(true);
+    }
+  
+    @Test
+    @DisplayName("회원 탈퇴를 한다.")
+    public void withdrawTest() {
+        // given
+        User user = insertUser();
+
+        // when
+        userService.withdraw(user);
+
+        // then
+        Optional<User> removedUser = userRepository.findById(user.getId());
+
+        assertThat(removedUser).isEmpty();
     }
 }

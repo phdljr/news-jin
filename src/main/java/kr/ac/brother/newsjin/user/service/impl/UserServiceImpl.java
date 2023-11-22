@@ -136,4 +136,12 @@ public class UserServiceImpl implements UserService {
 
         loginUser.updatePassword(passwordEncoder.encode(passwordRequestDto.getNewPassword()));
     }
+  
+    @Override
+    public void withdraw(final User user) {
+        User loginUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        userRepository.delete(loginUser);
+    }
 }

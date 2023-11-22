@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/sign-up")
+    @PostMapping("/")
     public ResponseEntity<SignUpResponseDto> signUp(
         @RequestBody SignUpRequestDto signUpRequestDto
     ) {
@@ -71,6 +72,12 @@ public class UserController {
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         userService.updatePassword(userDetails.getUser(), passwordRequestDto);
+        return ResponseEntity.ok("OK");
+    }
+  
+    @DeleteMapping("/")
+    public ResponseEntity<String> withdraw(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        userService.withdraw(userDetails.getUser());
         return ResponseEntity.ok("OK");
     }
 }

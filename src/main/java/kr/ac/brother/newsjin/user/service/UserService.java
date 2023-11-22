@@ -21,4 +21,6 @@ public interface UserService {
     IntroResponseDto updateIntro(User user, IntroRequestDto requestDto);
 
     void updatePassword(User user, PasswordRequestDto passwordRequestDto);
+
+    void withdraw(User user);
 }
