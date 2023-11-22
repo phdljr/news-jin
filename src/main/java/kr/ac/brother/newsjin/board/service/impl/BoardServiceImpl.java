@@ -44,4 +44,15 @@ public class BoardServiceImpl implements BoardService {
         return new BoardResponseDto(board);
     }
 
+    public BoardResponseDto deleteBoard(Long boardId, User user) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(NotFoundBoardException::new);
+        if (!user.getId().equals(board.getUser().getId())) {
+            throw new NotMatchUserException();
+        }
+        boardRepository.delete(board);
+
+        return new BoardResponseDto(board);
+    }
+
 }

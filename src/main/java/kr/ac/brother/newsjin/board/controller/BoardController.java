@@ -29,4 +29,10 @@ public class BoardController {
         return ResponseEntity.ok(boardResponseDto);
     }
 
+    @DeleteMapping("/boards/{boardId}")
+    public ResponseEntity<BoardResponseDto> deleteBoard(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        BoardResponseDto boardResponseDto = boardService.deleteBoard(boardId, userDetails.getUser());
+        return ResponseEntity.ok(boardResponseDto);
+    }
+
 }
