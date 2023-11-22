@@ -24,7 +24,7 @@ public class BoardServiceImpl implements BoardService {
                 .user(user)
                 .build();
 
-        boardRepository.save(board);
+        board = boardRepository.save(board);
 
         return new BoardResponseDto(board);
     }

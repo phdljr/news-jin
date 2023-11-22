@@ -11,7 +11,7 @@ public class BoardRequestDto {
     private String title;
     private String content;
     private String attachment;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
 }
