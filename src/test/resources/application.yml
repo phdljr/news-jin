@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:newsjin
+
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+
+  h2:
+    console:
+      enabled: true
+
+custom:
+  jwt:
+    expiration-period: 3600000
+    secret-key: vqRI8jIQAPb3l99QxAYvV5Gvva3VbBgWPbgfM0w1qWUBngWGsTPPodClklX0KqAthjscE4qkHtzWqYUoZabIVDU9AguLi4op2id5ZXF7Wd96wbEyoKBuCblBg7BOXNmBf2PtVXX0Cjhfu7z1acVSV9HCBf9PWvodoFCGe63TNa860mBLOoFGB4FF6tWW6Vr81baGKAtujaclAOzaZFjqmxAWqiQt2zwhrxJkWlKqKjMCfBFhODgye6V1Bs6OC6Zo
