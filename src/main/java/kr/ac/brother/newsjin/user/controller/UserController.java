@@ -74,7 +74,7 @@ public class UserController {
         userService.updatePassword(userDetails.getUser(), passwordRequestDto);
         return ResponseEntity.ok("OK");
     }
-
+  
     @DeleteMapping("/")
     public ResponseEntity<String> withdraw(@AuthenticationPrincipal UserDetailsImpl userDetails){
         userService.withdraw(userDetails.getUser());
