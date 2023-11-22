@@ -7,10 +7,7 @@ import kr.ac.brother.newsjin.global.security.userdetails.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -23,6 +20,11 @@ public class BoardController {
     @PostMapping("/boards")
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return boardService.createBoard(boardRequestDto, userDetails.getUser());
+    }
+
+    @PutMapping("/boards/{boardId}")
+    public BoardResponseDto updateBoard(@PathVariable Long boardId, @RequestBody BoardRequestDto boardRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return boardService.updateBoard(boardId, boardRequestDto, userDetails.getUser());
     }
 
 }

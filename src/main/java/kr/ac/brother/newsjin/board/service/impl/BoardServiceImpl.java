@@ -9,6 +9,7 @@ import kr.ac.brother.newsjin.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -23,6 +24,23 @@ public class BoardServiceImpl implements BoardService {
                 .content(boardRequestDto.getContent())
                 .user(user)
                 .build();
+
+        board = boardRepository.save(board);
+
+        return new BoardResponseDto(board);
+    }
+
+    @Transactional
+    public BoardResponseDto updateBoard(Long boardId, BoardRequestDto boardRequestDto, User user) {
+        Board board = boardRepository.findById(boardId).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시글이 없습니다.")
+        );
+        if (user.getUsername().equals(board.getUser().getUsername())) {
+            board.update(boardRequestDto);
+
+        } else {
+            throw new IllegalArgumentException("작성자만 수정할 수 있습니다.");
+        }
 
         board = boardRepository.save(board);
 
