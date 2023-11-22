@@ -7,4 +7,6 @@ import kr.ac.brother.newsjin.user.entity.User;
 public interface BoardService {
 
     BoardResponseDto createBoard(BoardRequestDto boardRequestDto, User user);
+
+    BoardResponseDto updateBoard(Long boardId, BoardRequestDto boardRequestDto, User user);
 }
