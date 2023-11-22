@@ -11,6 +11,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+
+import kr.ac.brother.newsjin.board.dto.request.BoardRequestDto;
 import kr.ac.brother.newsjin.comment.entity.Comment;
 import kr.ac.brother.newsjin.global.entity.BaseEntity;
 import kr.ac.brother.newsjin.user.entity.User;
@@ -48,4 +50,9 @@ public class Board extends BaseEntity {
 
     @OneToMany(mappedBy = "board")
     private final List<Comment> comments = new ArrayList<>();
+
+    public void update(BoardRequestDto boardRequestDto) {
+        this.title = boardRequestDto.getTitle();
+        this.content = boardRequestDto.getContent();
+    }
 }
