@@ -2,11 +2,14 @@ package kr.ac.brother.newsjin.user.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
-import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
+import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
+import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
 import kr.ac.brother.newsjin.user.entity.User;
 import kr.ac.brother.newsjin.user.entity.UserRole;
+import kr.ac.brother.newsjin.user.exception.NotFoundUserException;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
 import kr.ac.brother.newsjin.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +30,7 @@ class UserServiceImplTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    private User insertUser(){
+    private User insertUser() {
         User user = User.builder()
             .username("testusername")
             .password(passwordEncoder.encode("testpassword"))
@@ -69,5 +72,27 @@ class UserServiceImplTest {
 
         // then
         assertThat(responseDto).isNotNull();
+    }
+
+    @Test
+    @DisplayName("닉네임을 수정한다.")
+    public void updateNicknameTest() {
+        // given
+        User user = insertUser();
+        String changeNickname = "change nickname";
+        NicknameRequestDto requestDto = NicknameRequestDto.builder()
+            .nickname(changeNickname)
+            .build();
+
+        // when
+        NicknameResponseDto responseDto = userService.updateNickname(user, requestDto);
+
+        // then
+        User changedUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getNickname()).isEqualTo(changeNickname);
+        assertThat(changedUser.getNickname()).isEqualTo(changeNickname);
     }
 }
