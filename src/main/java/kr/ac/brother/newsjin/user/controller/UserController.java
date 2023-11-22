@@ -1,8 +1,10 @@
 package kr.ac.brother.newsjin.user.controller;
 
 import kr.ac.brother.newsjin.global.security.userdetails.UserDetailsImpl;
+import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
+import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
@@ -49,6 +51,16 @@ public class UserController {
     ) {
         NicknameResponseDto responseDto = userService.updateNickname(userDetails.getUser(),
             nicknameRequestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @PutMapping("/intro")
+    public ResponseEntity<IntroResponseDto> updateIntro(
+        @RequestBody IntroRequestDto introRequestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        IntroResponseDto responseDto = userService.updateIntro(userDetails.getUser(),
+            introRequestDto);
         return ResponseEntity.ok(responseDto);
     }
 }
