@@ -20,10 +20,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users/sign-up")
-    public ResponseEntity<SignUpResponseDto> signup(
+    public ResponseEntity<SignUpResponseDto> signUp(
         @RequestBody SignUpRequestDto signUpRequestDto
     ) {
-        SignUpResponseDto responseDto = userService.signup(signUpRequestDto);
+        SignUpResponseDto responseDto = userService.signUp(signUpRequestDto);
         return ResponseEntity.ok(responseDto);
     }
 }
