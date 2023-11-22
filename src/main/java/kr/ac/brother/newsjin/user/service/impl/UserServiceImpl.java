@@ -3,6 +3,7 @@ package kr.ac.brother.newsjin.user.service.impl;
 import java.util.Optional;
 import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
+import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
 import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
@@ -14,9 +15,12 @@ import kr.ac.brother.newsjin.user.exception.AlreadyExistEmailException;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistNicknameException;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistUsernameException;
 import kr.ac.brother.newsjin.user.exception.NotFoundUserException;
+import kr.ac.brother.newsjin.user.exception.NotMatchCheckPassword;
+import kr.ac.brother.newsjin.user.exception.NotMatchCurrentPassword;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
 import kr.ac.brother.newsjin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -114,5 +118,22 @@ public class UserServiceImpl implements UserService {
             .username(loginUser.getUsername())
             .intro(loginUser.getIntro())
             .build();
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(final User user, final PasswordRequestDto passwordRequestDto) {
+        User loginUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        if(!passwordEncoder.matches(passwordRequestDto.getCurrentPassword(), loginUser.getPassword())){
+            throw new NotMatchCurrentPassword();
+        }
+
+        if(!passwordRequestDto.getNewPassword().equals(passwordRequestDto.getCheckNewPassword())){
+            throw new NotMatchCheckPassword();
+        }
+
+        loginUser.updatePassword(passwordEncoder.encode(passwordRequestDto.getNewPassword()));
     }
 }
