@@ -2,6 +2,8 @@ package kr.ac.brother.newsjin.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,14 +42,20 @@ public class User extends BaseEntity {
     @Column
     private String intro;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role;
+
     @Builder
     public User(final String username, final String nickname, final String email,
-        final String password, final String image, final String intro) {
+        final String password, final String image,
+        final String intro, final UserRole role) {
         this.username = username;
         this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.image = image;
         this.intro = intro;
+        this.role = role;
     }
 }
