@@ -62,4 +62,18 @@ public class CommentServiceImpl implements CommentService {
 
         return new CommentResponseDTO(comment);
     }
+
+    // 댓글 삭제 메서드 기능 구현
+    @Transactional
+    @Override
+    public CommentResponseDTO deleteComment(User user, Long commentId) {
+        // commentRepository(DB) 안에 있는 commentId(데이터) 를 찾아라(findById) 없다면 예외처리(orElseThrow)인 NotFoundCommentException를 실행해라
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(NotFoundCommentException::new);
+        if (!user.getId().equals(comment.getUser().getId())) {
+            throw new NotMatchCommentException();
+        }
+        commentRepository.delete(comment);
+        return new CommentResponseDTO(comment);
+    }
 }
