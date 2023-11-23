@@ -7,10 +7,7 @@ import kr.ac.brother.newsjin.comment.service.CommentService;
 import kr.ac.brother.newsjin.global.security.userdetails.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -20,11 +17,10 @@ public class CommentController {
     private final CommentService commentService;
 
     // 댓글 생성 요청을 처리하는 메서드
-    @PostMapping("/comments/{commentId}")
-    public CommentResponseDTO createComment(@RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails, @AuthenticationPrincipal Board board) {
+    @PostMapping("/comments/{boardId}")
+    public CommentResponseDTO createComment(@RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Board boardId) {
 
         // CommentService 의 createComment 메서드를 호출하여 댓글을 생성하고 결과를 반환
-        return commentService.createComment(commentRequestDTO, userDetails.getUser(), board);
+        return commentService.createComment(commentRequestDTO, userDetails.getUser(), boardId);
     }
-
 }

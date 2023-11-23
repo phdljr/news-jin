@@ -1,6 +1,7 @@
 package kr.ac.brother.newsjin.comment.service.impl;
 
 import kr.ac.brother.newsjin.board.entity.Board;
+import kr.ac.brother.newsjin.board.repository.BoardRepository;
 import kr.ac.brother.newsjin.comment.dto.request.CommentRequestDTO;
 import kr.ac.brother.newsjin.comment.dto.response.CommentResponseDTO;
 import kr.ac.brother.newsjin.comment.entity.Comment;
@@ -15,14 +16,15 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl implements CommentService {
     // CommentRepository 인스턴스를 주입받음 (생성자 주입)
     private final CommentRepository commentRepository;
+    private final BoardRepository boardRepository;
 
     // 댓글을 생성하는 메서드
-    public CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user, Board board) {
+    public CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user, Board boardId) {
         // Comment 엔터티를 빌더 패턴을 사용하여 생성
         Comment comment = Comment.builder()
                 .content(commentRequestDTO.getContent())
                 .user(user)
-                .board(board)
+                .board(boardId)
                 .build();
 
         // 생성한 Comment 엔터티를 저장하고 저장된 엔터티를 받아옴
