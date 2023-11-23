@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 1234
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     url: jdbc:mysql://localhost:3306/newsjin
 
   jpa:
@@ -16,7 +16,25 @@ spring:
         show_sql: true
         use_sql_comments: true
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 13MB
+
+cloud:
+  aws:
+    s3:
+      bucket: news-jin-bucket
+    region:
+      static: ap-northeast-2  # AWS 기본 리전을 설정
+    stack:
+      auto: false
+    credentials:
+      access-key: ${S3_ACCESS_KEY}
+      secret-key: ${S3_SECRET_KEY}
+
 custom:
   jwt:
     expiration-period: 3600000
-    secret-key: vqRI8jIQAPb3l99QxAYvV5Gvva3VbBgWPbgfM0w1qWUBngWGsTPPodClklX0KqAthjscE4qkHtzWqYUoZabIVDU9AguLi4op2id5ZXF7Wd96wbEyoKBuCblBg7BOXNmBf2PtVXX0Cjhfu7z1acVSV9HCBf9PWvodoFCGe63TNa860mBLOoFGB4FF6tWW6Vr81baGKAtujaclAOzaZFjqmxAWqiQt2zwhrxJkWlKqKjMCfBFhODgye6V1Bs6OC6Zo
+    secret-key: ${JWT_SECRET_KEY}
