@@ -13,5 +13,5 @@ public interface CommentService {
     CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user, Long boardId);
 
     // modifyComment 메서드 선언, 댓글을 수정할 때 사용
-    CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user, Long boardId, Long commentId);
+    CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user, Long commentId);
 }
