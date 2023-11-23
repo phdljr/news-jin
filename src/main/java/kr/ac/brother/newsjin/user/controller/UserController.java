@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,7 +33,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<SignUpResponseDto> signUp(
         @RequestBody SignUpRequestDto signUpRequestDto
     ) {
@@ -38,12 +41,18 @@ public class UserController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<UserResponseDto> myPage(
         @AuthenticationPrincipal UserDetailsImpl userDetailsImpl
     ) {
         UserResponseDto responseDto = userService.getUserData(userDetailsImpl.getUser());
         return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> withdraw(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        userService.withdraw(userDetails.getUser());
+        return ResponseEntity.ok("OK");
     }
 
     @PutMapping("/nickname")
@@ -72,12 +81,6 @@ public class UserController {
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         userService.updatePassword(userDetails.getUser(), passwordRequestDto);
-        return ResponseEntity.ok("OK");
-    }
-  
-    @DeleteMapping("/")
-    public ResponseEntity<String> withdraw(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        userService.withdraw(userDetails.getUser());
         return ResponseEntity.ok("OK");
     }
 }
