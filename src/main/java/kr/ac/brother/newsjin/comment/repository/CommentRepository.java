@@ -1,5 +1,8 @@
 package kr.ac.brother.newsjin.comment.repository;
 
-public interface CommentRepository {
+import kr.ac.brother.newsjin.comment.entity.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 }
