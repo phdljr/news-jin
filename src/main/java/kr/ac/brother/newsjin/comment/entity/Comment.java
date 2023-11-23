@@ -1,12 +1,6 @@
 package kr.ac.brother.newsjin.comment.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.global.entity.BaseEntity;
 import kr.ac.brother.newsjin.user.entity.User;
