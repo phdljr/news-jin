@@ -10,5 +10,5 @@ public interface CommentService {
     // CommentRequestDTO : 댓글 생성 시 필요한 정보를 담고 있는 DTO
     // User : 댓글을 생성하는 사용자의 정보를 담고 있는 Entity
     // Board : 댓글이 작성되는 게시판의 정보를 담고 있는 Entity (필요한가..? 필요한거 같기도 하고 아닌거 같기도 하고)
-    CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user, Board board);
+    CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user, Long boardId);
 }

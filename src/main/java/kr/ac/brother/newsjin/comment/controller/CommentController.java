@@ -18,7 +18,7 @@ public class CommentController {
 
     // 댓글 생성 요청을 처리하는 메서드
     @PostMapping("/comments/{boardId}")
-    public CommentResponseDTO createComment(@RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Board boardId) {
+    public CommentResponseDTO createComment(@RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long boardId) {
 
         // CommentService 의 createComment 메서드를 호출하여 댓글을 생성하고 결과를 반환
         return commentService.createComment(commentRequestDTO, userDetails.getUser(), boardId);
