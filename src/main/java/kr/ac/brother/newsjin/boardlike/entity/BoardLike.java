@@ -1,4 +1,4 @@
-package kr.ac.brother.newsjin.like.entity;
+package kr.ac.brother.newsjin.boardlike.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "TB_LIKE")
-public class Like {
+@Table(name = "TB_BOARD_LIKE")
+public class BoardLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
