@@ -13,6 +13,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+      S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
     steps:
       - name: Set up CI server
         uses: actions/checkout@v3
