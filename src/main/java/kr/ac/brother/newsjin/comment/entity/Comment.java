@@ -2,6 +2,7 @@ package kr.ac.brother.newsjin.comment.entity;
 
 import jakarta.persistence.*;
 import kr.ac.brother.newsjin.board.entity.Board;
+import kr.ac.brother.newsjin.comment.dto.request.CommentRequestDTO;
 import kr.ac.brother.newsjin.global.entity.BaseEntity;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.AccessLevel;
@@ -34,5 +35,9 @@ public class Comment extends BaseEntity {
         this.content = content;
         this.user = user;
         this.board = board;
+    }
+
+    public void modify(CommentRequestDTO commentRequestDTO) {
+        this.content = commentRequestDTO.getContent();
     }
 }
