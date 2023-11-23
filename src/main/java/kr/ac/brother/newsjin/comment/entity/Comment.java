@@ -37,7 +37,6 @@ public class Comment extends BaseEntity {
         this.board = board;
     }
 
-    @Builder
     public void modifyContent(String content) {
         this.content = content;
     }
