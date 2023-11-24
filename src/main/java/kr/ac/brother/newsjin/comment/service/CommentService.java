@@ -1,6 +1,5 @@
 package kr.ac.brother.newsjin.comment.service;
 
-import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.comment.dto.request.CommentRequestDTO;
 import kr.ac.brother.newsjin.comment.dto.response.CommentResponseDTO;
 import kr.ac.brother.newsjin.user.entity.User;
@@ -13,5 +12,8 @@ public interface CommentService {
     CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user, Long boardId);
 
     // modifyComment 메서드 선언, 댓글을 수정할 때 사용
-    CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user, Long commentId);
+    CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user, Long boardId, Long commentId);
+
+    // 댓글을 삭제하는 메서드 구현 (구현만 해서는 아무 기능도 없음), 위 메서드들도 전부 마찬가지
+    CommentResponseDTO deleteComment(User user, Long commentId);
 }
