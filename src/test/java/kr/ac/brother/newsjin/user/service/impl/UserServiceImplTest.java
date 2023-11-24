@@ -39,7 +39,6 @@ class UserServiceImplTest {
             .username("testusername")
             .password(passwordEncoder.encode("testpassword"))
             .email("test@email.com")
-            .image("testimage")
             .intro("testintro")
             .nickname("testnickname")
             .role(UserRole.USER)

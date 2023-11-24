@@ -37,7 +37,10 @@ public class User extends BaseEntity {
     private String password;
 
     @Column
-    private String image;
+    private String imageName;
+
+    @Column
+    private String imagePath;
 
     @Column
     private String intro;
@@ -48,13 +51,14 @@ public class User extends BaseEntity {
 
     @Builder
     public User(final String username, final String nickname, final String email,
-        final String password, final String image,
-        final String intro, final UserRole role) {
+        final String password, final String imageName,
+        final String imagePath, final String intro, final UserRole role) {
         this.username = username;
         this.nickname = nickname;
         this.email = email;
         this.password = password;
-        this.image = image;
+        this.imageName = imageName;
+        this.imagePath = imagePath;
         this.intro = intro;
         this.role = role;
     }
@@ -69,5 +73,15 @@ public class User extends BaseEntity {
 
     public void updatePassword(final String password) {
         this.password = password;
+    }
+
+    public void uploadImage(final String imageName, final String imagePath) {
+        this.imageName = imageName;
+        this.imagePath = imagePath;
+    }
+
+    public void deleteImage() {
+        imageName = null;
+        imagePath = null;
     }
 }

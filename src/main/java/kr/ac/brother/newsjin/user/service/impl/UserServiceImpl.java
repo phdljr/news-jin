@@ -20,7 +20,6 @@ import kr.ac.brother.newsjin.user.exception.NotMatchCurrentPassword;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
 import kr.ac.brother.newsjin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,7 +78,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto getUserData(final User user) {
         return UserResponseDto.builder()
             .nickname(user.getNickname())
-            .image(user.getImage())
+            .imagePath(user.getImagePath())
             .intro(user.getIntro())
             .build();
     }
