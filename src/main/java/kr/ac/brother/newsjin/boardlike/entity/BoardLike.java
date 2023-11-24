@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,10 @@ public class BoardLike {
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
+    @Builder
+    public BoardLike(final User user, final Board board) {
+        this.user = user;
+        this.board = board;
+    }
 }
