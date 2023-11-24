@@ -9,13 +9,16 @@ import kr.ac.brother.newsjin.board.exception.NotFoundBoardException;
 import kr.ac.brother.newsjin.board.exception.NotMatchUserException;
 import kr.ac.brother.newsjin.board.repository.BoardRepository;
 import kr.ac.brother.newsjin.board.service.BoardService;
+import kr.ac.brother.newsjin.boardlike.repository.BoardLikeRepository;
 import kr.ac.brother.newsjin.comment.dto.response.CommentResponseDTO;
+import kr.ac.brother.newsjin.follow.repository.FollowRepository;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +27,8 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardLikeRepository boardLikeRepository;
+    private final FollowRepository followRepository;
 
     public BoardResponseDto createBoard(BoardRequestDto boardRequestDto, User user) {
         Board board = Board.builder()
@@ -75,8 +80,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<BoardWithoutCommentResponseDto> getBoards(String type) {
-        List<BoardWithoutCommentResponseDto> boardList = null;
+    public List<BoardWithoutCommentResponseDto> getBoards(String type, User user) {
+        List<Board> boardList = null;
+        List<BoardWithoutCommentResponseDto> boardWithoutCommentResponseDtoList = new ArrayList<>();
 
         if (type.equals("all")) {
             boardList = boardRepository.findByAll(type).stream().toList();
@@ -87,7 +93,18 @@ public class BoardServiceImpl implements BoardService {
         } else if (type.equals("like")) {
             boardList = boardRepository.findByLikeOderByDesc(type).stream().toList();
         }
-        return boardList;
+
+        for (Board board : boardList) {
+            boardWithoutCommentResponseDtoList
+                    .add(BoardWithoutCommentResponseDto.builder()
+                            .id(board.getId())
+                            .title(board.getTitle())
+                            .content(board.getContent())
+                            .likes(boardLikeRepository.countByBoard(board))
+                            .build());
+        }
+
+        return boardWithoutCommentResponseDtoList;
     }
 
 }
