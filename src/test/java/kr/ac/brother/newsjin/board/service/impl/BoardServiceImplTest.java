@@ -1,6 +1,7 @@
 package kr.ac.brother.newsjin.board.service.impl;
 
 import kr.ac.brother.newsjin.board.dto.response.BoardResponseDto;
+import kr.ac.brother.newsjin.board.dto.response.BoardWithCommentResponseDto;
 import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.board.repository.BoardRepository;
 import kr.ac.brother.newsjin.board.service.BoardService;
@@ -69,6 +70,20 @@ class BoardServiceImplTest {
         assertThat(responseDto).isNotNull();
         assertThat(responseDto.getId()).isEqualTo(board.getId());
 
+    }
+
+    @Test
+    public void getBoardTest() {
+        // given
+        User user = insertUser();
+        Board board = insertBoard(user);
+
+        // when
+        BoardWithCommentResponseDto responseDto = boardService.getBoard(board.getId());
+
+        // then
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getId()).isEqualTo(board.getId());
     }
 
 }
