@@ -72,4 +72,18 @@ class BoardServiceImplTest {
 
     }
 
+    @Test
+    public void getBoardTest() {
+        // given
+        User user = insertUser();
+        Board board = insertBoard(user);
+
+        // when
+        BoardResponseDto responseDto = boardService.getBoard(board.getId(), user);
+
+        // then
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getId()).isEqualTo(board.getId());
+    }
+
 }
