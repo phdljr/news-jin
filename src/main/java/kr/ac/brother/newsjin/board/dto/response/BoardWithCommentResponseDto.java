@@ -14,6 +14,8 @@ public class BoardWithCommentResponseDto {
     private Long id;
     private String title;
     private String content;
+    private String nickname;
+    private Long likes;
     private String attachment;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

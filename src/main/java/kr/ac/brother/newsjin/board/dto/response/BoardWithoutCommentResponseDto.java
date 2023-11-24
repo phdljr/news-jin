@@ -1,5 +1,6 @@
 package kr.ac.brother.newsjin.board.dto.response;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +9,8 @@ import lombok.Getter;
 public class BoardWithoutCommentResponseDto {
     private Long id;
     private String title;
-    private String content;
+    private String nickname;
     private Long likes;
     private Long follows;
+    private LocalDateTime createdAt;
 }
