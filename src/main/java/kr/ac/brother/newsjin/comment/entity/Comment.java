@@ -37,7 +37,7 @@ public class Comment extends BaseEntity {
         this.board = board;
     }
 
-    public void modify(CommentRequestDTO commentRequestDTO) {
-        this.content = commentRequestDTO.getContent();
+    public void modifyContent(String content) {
+        this.content = content;
     }
 }

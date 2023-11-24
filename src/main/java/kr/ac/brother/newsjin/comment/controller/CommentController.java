@@ -28,8 +28,8 @@ public class CommentController {
     // 댓글 수정 요청 처리 메서드
     // 댓글 수정 시 사용자의 변경내용, 유저 정보, 게시판 id, 댓글 id 를 받아옴
     @PutMapping("/comments/{commentId}")
-    public ResponseEntity<CommentResponseDTO> modifyComment(@RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long boardId, @PathVariable Long commentId) {
-        CommentResponseDTO commentResponseDTO = commentService.modifyComment(commentRequestDTO, userDetails.getUser(), boardId, commentId);
+    public ResponseEntity<CommentResponseDTO> modifyComment(@RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long commentId) {
+        CommentResponseDTO commentResponseDTO = commentService.modifyComment(commentRequestDTO, userDetails.getUser(), commentId);
         // 수정된 댓글 정보를 포함하여 CommentResponseDTO 를 HTTP 응답으로 반환
         return ResponseEntity.ok(commentResponseDTO);
     }

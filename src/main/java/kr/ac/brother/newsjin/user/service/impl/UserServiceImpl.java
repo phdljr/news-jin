@@ -1,8 +1,11 @@
 package kr.ac.brother.newsjin.user.service.impl;
 
 import java.util.Optional;
+import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
+import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
+import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
@@ -12,9 +15,12 @@ import kr.ac.brother.newsjin.user.exception.AlreadyExistEmailException;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistNicknameException;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistUsernameException;
 import kr.ac.brother.newsjin.user.exception.NotFoundUserException;
+import kr.ac.brother.newsjin.user.exception.NotMatchCheckPassword;
+import kr.ac.brother.newsjin.user.exception.NotMatchCurrentPassword;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
 import kr.ac.brother.newsjin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,9 +88,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public NicknameResponseDto updateNickname(
         final User user,
-        final NicknameRequestDto nicknameRequestDto
+        final NicknameRequestDto requestDto
     ) {
-        Optional<User> findUser = userRepository.findByNickname(nicknameRequestDto.getNickname());
+        Optional<User> findUser = userRepository.findByNickname(requestDto.getNickname());
         if (findUser.isPresent()) {
             throw new AlreadyExistNicknameException();
         }
@@ -92,11 +98,50 @@ public class UserServiceImpl implements UserService {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        loginUser.updateNickname(nicknameRequestDto.getNickname());
+        loginUser.updateNickname(requestDto.getNickname());
 
         return NicknameResponseDto.builder()
             .username(loginUser.getUsername())
             .nickname(loginUser.getNickname())
             .build();
+    }
+
+    @Override
+    @Transactional
+    public IntroResponseDto updateIntro(final User user, final IntroRequestDto requestDto) {
+        User loginUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        loginUser.updateIntro(requestDto.getIntro());
+
+        return IntroResponseDto.builder()
+            .username(loginUser.getUsername())
+            .intro(loginUser.getIntro())
+            .build();
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(final User user, final PasswordRequestDto passwordRequestDto) {
+        User loginUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        if(!passwordEncoder.matches(passwordRequestDto.getCurrentPassword(), loginUser.getPassword())){
+            throw new NotMatchCurrentPassword();
+        }
+
+        if(!passwordRequestDto.getNewPassword().equals(passwordRequestDto.getCheckNewPassword())){
+            throw new NotMatchCheckPassword();
+        }
+
+        loginUser.updatePassword(passwordEncoder.encode(passwordRequestDto.getNewPassword()));
+    }
+  
+    @Override
+    public void withdraw(final User user) {
+        User loginUser = userRepository.findById(user.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        userRepository.delete(loginUser);
     }
 }

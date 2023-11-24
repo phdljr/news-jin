@@ -10,7 +10,6 @@ import kr.ac.brother.newsjin.comment.exception.NotMatchCommentException;
 import kr.ac.brother.newsjin.comment.repository.CommentRepository;
 import kr.ac.brother.newsjin.comment.service.CommentService;
 import kr.ac.brother.newsjin.user.entity.User;
-import kr.ac.brother.newsjin.user.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +46,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     // 댓글을 수정하는 메서드 (매개변수로 클라이언트 요청, 유저데이터, 게시글 Id, 댓글 Id)
-    public CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user, Long boardId, Long commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(NotMatchCommentException::new);
+    public CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user, Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
         // Board board = boardRepository.findById(boardId).orElseThrow(NotFoundUserException::new); 아마 필요 없을거 같음..
 
         // userId 가 comment.User 의 id와 일치하지 않다면
@@ -58,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
         }
         // 일치한다면 if문이 실행되지 않고 이어서 실행
         // comment 를 수정함
-        comment.modify(commentRequestDTO);
+        comment.modifyContent(comment.getContent());
 
         return new CommentResponseDTO(comment);
     }
