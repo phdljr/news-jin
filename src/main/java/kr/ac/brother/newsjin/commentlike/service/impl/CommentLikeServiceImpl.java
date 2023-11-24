@@ -1,8 +1,6 @@
 package kr.ac.brother.newsjin.commentlike.service.impl;
 
 import java.util.Optional;
-import kr.ac.brother.newsjin.board.entity.Board;
-import kr.ac.brother.newsjin.boardlike.entity.BoardLike;
 import kr.ac.brother.newsjin.comment.entity.Comment;
 import kr.ac.brother.newsjin.comment.exception.NotFoundCommentException;
 import kr.ac.brother.newsjin.comment.repository.CommentRepository;
@@ -30,12 +28,14 @@ public class CommentLikeServiceImpl implements CommentLikeService {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUser(loginUser);
+        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(
+            loginUser, commentId);
         if (findCommentLike.isPresent()) {
             throw new AlreadyExistCommentLikeException();
         }
 
-        Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
+        Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(NotFoundCommentException::new);
 
         CommentLike commentLike = CommentLike.builder()
             .comment(comment)
@@ -50,7 +50,8 @@ public class CommentLikeServiceImpl implements CommentLikeService {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUser(loginUser);
+        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(
+            loginUser, commentId);
         if (findCommentLike.isEmpty()) {
             throw new NotFoundCommentLikeException();
         }

@@ -1,13 +1,10 @@
 package kr.ac.brother.newsjin.commentlike.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
 import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.board.repository.BoardRepository;
-import kr.ac.brother.newsjin.boardlike.repository.BoardLikeRepository;
-import kr.ac.brother.newsjin.boardlike.service.BoardLikeService;
 import kr.ac.brother.newsjin.comment.entity.Comment;
 import kr.ac.brother.newsjin.comment.repository.CommentRepository;
 import kr.ac.brother.newsjin.commentlike.entity.CommentLike;
@@ -84,7 +81,7 @@ class CommentLikeServiceImplTest {
         commentLikeService.likeComment(commentId, user);
 
         // then
-        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUser(user);
+        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(user, commentId);
         assertThat(findCommentLike).isNotEmpty();
 
         CommentLike commentLike = findCommentLike.get();
@@ -107,7 +104,7 @@ class CommentLikeServiceImplTest {
         commentLikeService.unlikeComment(commentId, user);
 
         // then
-        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUser(user);
+        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(user, commentId);
         assertThat(findCommentLike).isEmpty();
     }
 }

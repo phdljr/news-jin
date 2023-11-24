@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.comment.entity.Comment;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.AccessLevel;
