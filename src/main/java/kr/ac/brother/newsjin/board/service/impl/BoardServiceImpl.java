@@ -15,7 +15,7 @@ import kr.ac.brother.newsjin.board.service.BoardService;
 import kr.ac.brother.newsjin.boardlike.entity.BoardLike;
 import kr.ac.brother.newsjin.boardlike.repository.BoardLikeRepository;
 import kr.ac.brother.newsjin.comment.dto.response.CommentWithUserResponseDTO;
-import kr.ac.brother.newsjin.follow.repository.FollowRepository;
+import kr.ac.brother.newsjin.commentlike.repository.CommentLikeRepository;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
     private final BoardLikeRepository boardLikeRepository;
-    private final FollowRepository followRepository;
+    private final CommentLikeRepository commentLikeRepository;
 
     @Override
     public BoardResponseDto createBoard(BoardRequestDto boardRequestDto, User user) {
@@ -72,16 +72,25 @@ public class BoardServiceImpl implements BoardService {
     @Transactional(readOnly = true)
     @Override
     public BoardWithCommentResponseDto getBoard(Long boardId) {
-        Board board = boardRepository.findById(boardId).get();
-        List<CommentWithUserResponseDTO> comments = board.getComments().stream()
-            .map(CommentWithUserResponseDTO::new).toList();
+        Board board = boardRepository.findById(boardId).orElseThrow(NotFoundBoardException::new);
+
+        List<CommentWithUserResponseDTO> comments = board.getComments()
+            .stream()
+            .map(comment -> {
+                Long commentLikes = commentLikeRepository.countByComment(comment);
+                return new CommentWithUserResponseDTO(comment, commentLikes);
+            })
+            .toList();
 
         return BoardWithCommentResponseDto.builder()
             .id(board.getId())
             .title(board.getTitle())
+            .nickname(board.getUser().getNickname())
             .content(board.getContent())
-            .createdAt(board.getCreateAt())
+            .likes(boardLikeRepository.countByBoard(board))
             .comments(comments)
+            .createdAt(board.getCreateAt())
+            .modifiedAt(board.getModifiedAt())
             .build();
     }
 
@@ -98,18 +107,7 @@ public class BoardServiceImpl implements BoardService {
             throw new IllegalBoardTypeException();
         }
 
-        List<BoardWithoutCommentResponseDto> boardWithoutCommentResponseDtoList = new ArrayList<>();
-        for (Board board : boardList) {
-            boardWithoutCommentResponseDtoList
-                .add(BoardWithoutCommentResponseDto.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .likes(boardLikeRepository.countByBoard(board))
-                    .build());
-        }
-
-        return boardWithoutCommentResponseDtoList;
+        return createBoardWithoutCommentResponseDto(boardList);
     }
 
     @Transactional(readOnly = true)
@@ -127,17 +125,24 @@ public class BoardServiceImpl implements BoardService {
             boardList = findByLike(user);
         }
 
+        return createBoardWithoutCommentResponseDto(boardList);
+    }
+
+    private List<BoardWithoutCommentResponseDto> createBoardWithoutCommentResponseDto(
+        List<Board> boards
+    ) {
         List<BoardWithoutCommentResponseDto> boardWithoutCommentResponseDtoList = new ArrayList<>();
-        for (Board board : boardList) {
+        for (Board board : boards) {
             boardWithoutCommentResponseDtoList
                 .add(BoardWithoutCommentResponseDto.builder()
                     .id(board.getId())
                     .title(board.getTitle())
-                    .content(board.getContent())
+                    .nickname(board.getUser().getNickname())
                     .likes(boardLikeRepository.countByBoard(board))
-                    .build());
+                    .createdAt(board.getCreateAt())
+                    .build()
+                );
         }
-
         return boardWithoutCommentResponseDtoList;
     }
 

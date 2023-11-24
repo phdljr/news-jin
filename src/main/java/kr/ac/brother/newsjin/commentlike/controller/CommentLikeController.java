@@ -32,8 +32,7 @@ public class CommentLikeController {
         @PathVariable("commentId") Long commentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        commentLikeService.unlikeComment
-            (commentId, userDetails.getUser());
+        commentLikeService.unlikeComment(commentId, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }
 }

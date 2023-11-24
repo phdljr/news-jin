@@ -60,7 +60,7 @@ public class BoardController {
 
     @GetMapping("/boards")
     public ResponseEntity<List<BoardWithoutCommentResponseDto>> getBoards(
-        @RequestParam("type") String type
+        @RequestParam(name = "type", required = true, defaultValue = "all") String type
     ) {
         List<BoardWithoutCommentResponseDto> boardWithoutCommentResponseDto =
             boardService.getBoards(type);
@@ -69,7 +69,7 @@ public class BoardController {
 
     @GetMapping("/boards/auth")
     public ResponseEntity<List<BoardWithoutCommentResponseDto>> getBoardsAuth(
-        @RequestParam("type") String type,
+        @RequestParam(name = "type", required = true, defaultValue = "all") String type,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         List<BoardWithoutCommentResponseDto> boardWithoutCommentResponseDto =

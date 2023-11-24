@@ -8,16 +8,18 @@ import lombok.Getter;
 public class CommentWithUserResponseDTO {
 
     private Long id;
+    private String nickname;
     private String content;
+    private Long likes;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private String nickname;
 
-    public CommentWithUserResponseDTO(Comment comment) {
+    public CommentWithUserResponseDTO(Comment comment, Long likes) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.createdAt = comment.getCreateAt();
         this.modifiedAt = comment.getModifiedAt();
         this.nickname = comment.getUser().getNickname();
+        this.likes = likes;
     }
 }
