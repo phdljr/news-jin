@@ -70,11 +70,11 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(NotFoundCommentException::new);
 
-            Long userId = comment.getUser().getId();
+        Long userId = comment.getUser().getId();
 
-            if (!userId.equals(user.getId())) {
-                throw new NotMatchCommentException();
-            }
+        if (!userId.equals(user.getId())) {
+            throw new NotMatchCommentException();
+        }
 
         commentRepository.delete(comment);
         return new CommentResponseDTO(comment);
