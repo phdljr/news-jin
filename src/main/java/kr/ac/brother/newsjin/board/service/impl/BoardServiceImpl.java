@@ -88,8 +88,9 @@ public class BoardServiceImpl implements BoardService {
             .nickname(board.getUser().getNickname())
             .content(board.getContent())
             .likes(boardLikeRepository.countByBoard(board))
-            .createdAt(board.getCreateAt())
             .comments(comments)
+            .createdAt(board.getCreateAt())
+            .modifiedAt(board.getModifiedAt())
             .build();
     }
 
@@ -136,6 +137,7 @@ public class BoardServiceImpl implements BoardService {
                 .add(BoardWithoutCommentResponseDto.builder()
                     .id(board.getId())
                     .title(board.getTitle())
+                    .nickname(board.getUser().getNickname())
                     .likes(boardLikeRepository.countByBoard(board))
                     .createdAt(board.getCreateAt())
                     .build()

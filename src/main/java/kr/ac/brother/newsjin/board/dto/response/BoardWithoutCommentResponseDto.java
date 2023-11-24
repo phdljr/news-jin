@@ -11,6 +11,5 @@ public class BoardWithoutCommentResponseDto {
     private String title;
     private String nickname;
     private Long likes;
-    private Long follows;
     private LocalDateTime createdAt;
 }
