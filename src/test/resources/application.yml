@@ -41,4 +41,4 @@ cloud:
 custom:
   jwt:
     expiration-period: 3600000
-    secret-key: ${JWT_SECRET_KEY}
+    secret-key: 12345678910abcdefghijklmnopqrstuvwxyz12345678910abcdefghijklmnopqrstuvwxyz
