@@ -22,7 +22,7 @@ public class CommentLikeController {
     public ResponseEntity<String> likeComment(
         @PathVariable("commentId") Long commentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         commentLikeService.likeComment(commentId, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }
@@ -31,7 +31,7 @@ public class CommentLikeController {
     public ResponseEntity<String> unlikeComment(
         @PathVariable("commentId") Long commentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         commentLikeService.unlikeComment
             (commentId, userDetails.getUser());
         return ResponseEntity.ok("OK");
