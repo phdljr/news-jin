@@ -68,7 +68,7 @@ class BoardLikeServiceImplTest {
         boardLikeService.likeBoard(boardId, user);
 
         // then
-        BoardLike boardLike = boardLikeRepository.findByUser(user).get();
+        BoardLike boardLike = boardLikeRepository.findByUserAndBoardId(user, boardId).get();
 
         assertThat(boardLike.getBoard().getId()).isEqualTo(boardId);
         assertThat(boardLike.getUser().getId()).isEqualTo(user.getId());
@@ -88,7 +88,7 @@ class BoardLikeServiceImplTest {
         boardLikeService.unlikeBoard(boardId, user);
 
         // then
-        Optional<BoardLike> boardLike = boardLikeRepository.findByUser(user);
+        Optional<BoardLike> boardLike = boardLikeRepository.findByUserAndBoardId(user, boardId);
 
         assertThat(boardLike.isEmpty()).isEqualTo(true);
     }

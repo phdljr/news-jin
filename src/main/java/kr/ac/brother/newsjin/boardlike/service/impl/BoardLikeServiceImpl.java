@@ -28,7 +28,8 @@ public class BoardLikeServiceImpl implements BoardLikeService {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        Optional<BoardLike> findBoardLike = boardLikeRepository.findByUser(loginUser);
+        Optional<BoardLike> findBoardLike =
+            boardLikeRepository.findByUserAndBoardId(loginUser, boardId);
         if (findBoardLike.isPresent()) {
             throw new AlreadyExistBoardLikeException();
         }
@@ -48,7 +49,8 @@ public class BoardLikeServiceImpl implements BoardLikeService {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        Optional<BoardLike> findBoardLike = boardLikeRepository.findByUser(loginUser);
+        Optional<BoardLike> findBoardLike =
+            boardLikeRepository.findByUserAndBoardId(loginUser, boardId);
         if (findBoardLike.isEmpty()) {
             throw new NotFoundBoardLikeException();
         }
