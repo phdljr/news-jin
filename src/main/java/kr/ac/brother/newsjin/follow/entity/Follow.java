@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,10 @@ public class Follow {
     @ManyToOne
     @JoinColumn(name = "following_id")
     private User followingUser;
+
+    @Builder
+    public Follow(final User user, final User followingUser) {
+        this.user = user;
+        this.followingUser = followingUser;
+    }
 }
