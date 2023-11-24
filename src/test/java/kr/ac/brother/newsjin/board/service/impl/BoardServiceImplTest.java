@@ -37,6 +37,7 @@ class BoardServiceImplTest {
                 .username("testusername")
                 .password(passwordEncoder.encode("testpassword"))
                 .email("test@email.com")
+                .imageName("testimage")
                 .intro("testintro")
                 .nickname("testnickname")
                 .role(UserRole.USER)
