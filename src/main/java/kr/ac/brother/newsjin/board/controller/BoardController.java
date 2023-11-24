@@ -60,7 +60,7 @@ public class BoardController {
 
     @GetMapping("/boards")
     public ResponseEntity<List<BoardWithoutCommentResponseDto>> getBoards(
-        @RequestParam(name = "type", defaultValue = "all") String type
+        @RequestParam("type") String type
     ) {
         List<BoardWithoutCommentResponseDto> boardWithoutCommentResponseDto =
             boardService.getBoards(type);
@@ -69,11 +69,12 @@ public class BoardController {
 
     @GetMapping("/boards/auth")
     public ResponseEntity<List<BoardWithoutCommentResponseDto>> getBoardsAuth(
-        @RequestParam(name = "type", defaultValue = "all") String type,
+        @RequestParam("type") String type,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         List<BoardWithoutCommentResponseDto> boardWithoutCommentResponseDto =
             boardService.getBoardsAuth(type, userDetails.getUser());
         return ResponseEntity.ok(boardWithoutCommentResponseDto);
     }
+
 }

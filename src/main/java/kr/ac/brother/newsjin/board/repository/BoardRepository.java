@@ -8,3 +8,4 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     List<Board> findAllByOrderByCreateAtDesc();
 }
+

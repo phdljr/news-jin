@@ -122,7 +122,7 @@ public class BoardServiceImpl implements BoardService {
         } else if (type.equals("recent")) {
             return getBoards("recent");
         } else if (type.equals("follow")) {
-            boardList = findByFollow();
+            boardList = findByFollow(user);
         } else if (type.equals("like")) {
             boardList = findByLike(user);
         }
@@ -151,7 +151,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 팔로우한 사용자의 게시글 조회
-    private List<Board> findByFollow() {
+    private List<Board> findByFollow(User user) {
         return null;
     }
 

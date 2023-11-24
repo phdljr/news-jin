@@ -12,7 +12,7 @@ public interface BoardLikeRepository extends JpaRepository<BoardLike, Long> {
 
     Long countByBoard(Board board);
 
-    Optional<BoardLike> findByUserAndBoardId(User user, Long boardId);
-
     List<BoardLike> findByUser(User user);
+
+    Optional<BoardLike> findByUserAndBoardId(User loginUser, Long boardId);
 }
