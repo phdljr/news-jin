@@ -9,6 +9,7 @@ import kr.ac.brother.newsjin.follow.service.FollowerService;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class FollowerServiceImpl implements FollowerService {
     private final FollowRepository followRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<FollowResponseDto> getFollowers(final User user) {
         return followRepository.findByFollowingUser(user)
             .stream()
