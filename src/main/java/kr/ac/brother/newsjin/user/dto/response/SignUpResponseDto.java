@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 public class SignUpResponseDto {
 
-    private Long id;
-    private String username;
-    private String email;
-    private String nickname;
+    private final Long id;
+    private final String username;
+    private final String email;
+    private final String nickname;
 
     @Builder
     public SignUpResponseDto(final Long id, final String username, final String email,

@@ -1,6 +1,5 @@
 package kr.ac.brother.newsjin.boardlike.repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import kr.ac.brother.newsjin.board.entity.Board;

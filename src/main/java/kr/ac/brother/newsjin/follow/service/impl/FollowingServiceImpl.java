@@ -3,7 +3,6 @@ package kr.ac.brother.newsjin.follow.service.impl;
 import java.util.List;
 import java.util.Optional;
 import kr.ac.brother.newsjin.follow.dto.response.FollowResponseDto;
-import kr.ac.brother.newsjin.follow.dto.response.FollowResponseDto.FollowResponseDtoBuilder;
 import kr.ac.brother.newsjin.follow.entity.Follow;
 import kr.ac.brother.newsjin.follow.exception.AlreadyExistFollowingUserException;
 import kr.ac.brother.newsjin.follow.exception.NotAllowFollowingYourselfException;
@@ -30,11 +29,11 @@ public class FollowingServiceImpl implements FollowingService {
         User followingUser = userRepository.findById(userId)
             .orElseThrow(NotFoundUserException::new);
 
-        if(followingUser.getId().equals(user.getId())){
+        if (followingUser.getId().equals(user.getId())) {
             throw new NotAllowFollowingYourselfException();
         }
 
-        if(followRepository.existsByUserAndFollowingUser(user, followingUser)){
+        if (followRepository.existsByUserAndFollowingUser(user, followingUser)) {
             throw new AlreadyExistFollowingUserException();
         }
 
@@ -55,7 +54,7 @@ public class FollowingServiceImpl implements FollowingService {
         Optional<Follow> findFollow =
             followRepository.findByUserAndFollowingUser(user, followingUser);
 
-        if(findFollow.isEmpty()){
+        if (findFollow.isEmpty()) {
             throw new NotFoundFollowingUserException();
         }
 

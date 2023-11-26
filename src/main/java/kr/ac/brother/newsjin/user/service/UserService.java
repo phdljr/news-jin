@@ -7,8 +7,8 @@ import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.UserWithdrawRequestDto;
 import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
-import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
+import kr.ac.brother.newsjin.user.dto.response.UserResponseDto;
 import kr.ac.brother.newsjin.user.entity.User;
 
 public interface UserService {

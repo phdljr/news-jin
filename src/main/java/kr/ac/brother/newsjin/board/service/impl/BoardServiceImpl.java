@@ -18,7 +18,6 @@ import kr.ac.brother.newsjin.boardlike.repository.BoardLikeRepository;
 import kr.ac.brother.newsjin.comment.dto.response.CommentWithUserResponseDTO;
 import kr.ac.brother.newsjin.commentlike.repository.CommentLikeRepository;
 import kr.ac.brother.newsjin.follow.dto.response.FollowResponseDto;
-import kr.ac.brother.newsjin.follow.service.FollowerService;
 import kr.ac.brother.newsjin.follow.service.FollowingService;
 import kr.ac.brother.newsjin.global.entity.BaseEntity;
 import kr.ac.brother.newsjin.user.entity.User;

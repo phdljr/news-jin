@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 public class UserResponseDto {
 
-    private String nickname;
-    private String imagePath;
-    private String intro;
+    private final String nickname;
+    private final String imagePath;
+    private final String intro;
 
     @Builder
     public UserResponseDto(final String nickname, final String imagePath, final String intro) {

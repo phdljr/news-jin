@@ -129,11 +129,12 @@ public class UserServiceImpl implements UserService {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        if(!passwordEncoder.matches(passwordRequestDto.getCurrentPassword(), loginUser.getPassword())){
+        if (!passwordEncoder.matches(passwordRequestDto.getCurrentPassword(),
+            loginUser.getPassword())) {
             throw new NotMatchCurrentPassword();
         }
 
-        if(!passwordRequestDto.getNewPassword().equals(passwordRequestDto.getCheckNewPassword())){
+        if (!passwordRequestDto.getNewPassword().equals(passwordRequestDto.getCheckNewPassword())) {
             throw new NotMatchCheckPassword();
         }
 
@@ -145,11 +146,11 @@ public class UserServiceImpl implements UserService {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        if(!passwordEncoder.matches(userWithdrawRequestDto.getPassword(), user.getPassword())){
+        if (!passwordEncoder.matches(userWithdrawRequestDto.getPassword(), user.getPassword())) {
             throw new NotMatchCurrentPassword();
         }
 
-        if(!userWithdrawRequestDto.getConfirmationPhrase().equals(CONFIRMATION_PHRASE)){
+        if (!userWithdrawRequestDto.getConfirmationPhrase().equals(CONFIRMATION_PHRASE)) {
             throw new NotMatchConfirmationPhrase();
         }
 

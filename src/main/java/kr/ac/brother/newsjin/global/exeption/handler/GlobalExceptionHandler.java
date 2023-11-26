@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AlreadyExistEmailException.class)
-    public ResponseEntity<ExceptionResponseDto> handleAlreadyExistEmailException(){
+    public ResponseEntity<ExceptionResponseDto> handleAlreadyExistEmailException() {
         return ResponseEntity
             .status(CustomException.ALREADY_EXIST_EMAIL.getStatusCode())
             .body(CustomException.ALREADY_EXIST_EMAIL.toDto());
     }
 
     @ExceptionHandler(AlreadyExistUsernameException.class)
-    public ResponseEntity<ExceptionResponseDto> handleAlreadyExistUsernameException(){
+    public ResponseEntity<ExceptionResponseDto> handleAlreadyExistUsernameException() {
         return ResponseEntity
             .status(CustomException.ALREADY_EXIST_USERNAME.getStatusCode())
             .body(CustomException.ALREADY_EXIST_USERNAME.toDto());
