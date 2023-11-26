@@ -69,10 +69,9 @@ public class CommentServiceImplTest {
         return commentRepository.save(comment);
     }
 
-    // 댓글 작성 기능 테스트
     @Test
-    @DisplayName("댓글을 작성")
-    public void createCommentTest() {
+    @DisplayName("댓글 삭제 기능 테스트")
+    public void deleteCommentTest() {
         // given
         // 테스트를 위한 초기 상태 설정
         User user = insertUser();
