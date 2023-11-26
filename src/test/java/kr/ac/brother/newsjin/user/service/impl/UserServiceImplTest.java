@@ -7,6 +7,7 @@ import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
+import kr.ac.brother.newsjin.user.dto.request.UserWithdrawRequestDto;
 import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
@@ -149,9 +150,13 @@ class UserServiceImplTest {
     public void withdrawTest() {
         // given
         User user = insertUser();
+        UserWithdrawRequestDto requestDto = UserWithdrawRequestDto.builder()
+            .password("testpassword")
+            .confirmationPhrase("회원 탈퇴 진행을 확인했습니다.")
+            .build();
 
         // when
-        userService.withdraw(user);
+        userService.withdraw(requestDto, user);
 
         // then
         Optional<User> removedUser = userRepository.findById(user.getId());

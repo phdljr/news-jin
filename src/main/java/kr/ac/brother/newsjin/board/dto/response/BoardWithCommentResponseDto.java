@@ -1,6 +1,5 @@
 package kr.ac.brother.newsjin.board.dto.response;
 
-import kr.ac.brother.newsjin.comment.dto.response.CommentResponseDTO;
 import kr.ac.brother.newsjin.comment.dto.response.CommentWithUserResponseDTO;
 import lombok.Builder;
 import lombok.Getter;
