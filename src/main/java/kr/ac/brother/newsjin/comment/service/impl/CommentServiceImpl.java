@@ -69,9 +69,13 @@ public class CommentServiceImpl implements CommentService {
         // commentRepository(DB) 안에 있는 commentId(데이터) 를 찾아라(findById) 없다면 예외처리(orElseThrow)인 NotFoundCommentException를 실행해라
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(NotFoundCommentException::new);
-        if (!user.getId().equals(comment.getUser().getId())) {
+
+        Long userId = comment.getUser().getId();
+
+        if (!userId.equals(user.getId())) {
             throw new NotMatchCommentException();
         }
+
         commentRepository.delete(comment);
         return new CommentResponseDTO(comment);
     }
