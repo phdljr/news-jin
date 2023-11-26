@@ -1,19 +1,18 @@
 package kr.ac.brother.newsjin.board.dto.response;
 
+import java.time.LocalDateTime;
 import kr.ac.brother.newsjin.board.entity.Board;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class BoardResponseDto {
 
-    private Long id;
-    private String title;
-    private String content;
+    private final Long id;
+    private final String title;
+    private final String content;
     private String attachment;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime modifiedAt;
 
     public BoardResponseDto(Board board) {
         this.id = board.getId();

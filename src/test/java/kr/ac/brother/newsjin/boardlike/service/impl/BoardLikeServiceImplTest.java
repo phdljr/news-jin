@@ -1,10 +1,8 @@
 package kr.ac.brother.newsjin.boardlike.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
-import javax.swing.text.html.Option;
 import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.board.repository.BoardRepository;
 import kr.ac.brother.newsjin.boardlike.entity.BoardLike;
@@ -23,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @SpringBootTest
 class BoardLikeServiceImplTest {
+
     @Autowired
     BoardLikeService boardLikeService;
     @Autowired
@@ -57,7 +56,7 @@ class BoardLikeServiceImplTest {
 
     @Test
     @DisplayName("게시글에 좋아요를 누른다.")
-    public void likeBoardService(){
+    public void likeBoardService() {
         // given
         User user = insertUser();
         Board board = insertBoard(user);
@@ -76,7 +75,7 @@ class BoardLikeServiceImplTest {
 
     @Test
     @DisplayName("게시글에 좋아요를 취소한다.")
-    public void unlikeBoardService(){
+    public void unlikeBoardService() {
         // given
         User user = insertUser();
         Board board = insertBoard(user);

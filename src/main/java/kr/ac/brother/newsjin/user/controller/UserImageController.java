@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,7 @@ public class UserImageController {
     public ResponseEntity<String> uploadImage(
         @RequestPart(name = "image") MultipartFile multipartFile,
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         userImageService.uploadImage(multipartFile, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }
@@ -34,7 +33,7 @@ public class UserImageController {
     @DeleteMapping
     public ResponseEntity<String> deleteImage(
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         userImageService.deleteImage(userDetails.getUser());
         return ResponseEntity.ok("OK");
     }

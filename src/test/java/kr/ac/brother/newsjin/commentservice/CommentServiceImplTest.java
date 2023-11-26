@@ -1,5 +1,8 @@
 package kr.ac.brother.newsjin.commentservice;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import java.util.Optional;
 import kr.ac.brother.newsjin.board.entity.Board;
 import kr.ac.brother.newsjin.board.repository.BoardRepository;
 import kr.ac.brother.newsjin.comment.dto.response.CommentResponseDTO;
@@ -15,11 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import java.util.Optional;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @Transactional
@@ -39,33 +37,33 @@ public class CommentServiceImplTest {
     // 사용자 정보 생성
     private User insertUser() {
         User user = User.builder()
-                .username("testusername")
-                .password(passwordEncoder.encode("testpassword"))
-                .email("test@email.com")
-                .intro("testintro")
-                .nickname("testnickname")
-                .role(UserRole.USER)
-                .build();
+            .username("testusername")
+            .password(passwordEncoder.encode("testpassword"))
+            .email("test@email.com")
+            .intro("testintro")
+            .nickname("testnickname")
+            .role(UserRole.USER)
+            .build();
         return userRepository.save(user);
     }
 
     // 게시물 정보 생성
     public Board insertBoard(User user) {
         Board board = Board.builder()
-                .title("testtitle")
-                .content("testcontent")
-                .user(user)
-                .build();
+            .title("testtitle")
+            .content("testcontent")
+            .user(user)
+            .build();
         return boardRepository.save(board);
     }
 
     // 댓글 정보 생성
     public Comment insertComment(Board board, User user) {
         Comment comment = Comment.builder()
-                .content("testcontents")
-                .user(user)
-                .board(board)
-                .build();
+            .content("testcontents")
+            .user(user)
+            .board(board)
+            .build();
         return commentRepository.save(comment);
     }
 

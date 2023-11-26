@@ -51,7 +51,7 @@ public class UserController {
     public ResponseEntity<String> withdraw(
         @RequestBody UserWithdrawRequestDto userWithdrawRequestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         userService.withdraw(userWithdrawRequestDto, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }

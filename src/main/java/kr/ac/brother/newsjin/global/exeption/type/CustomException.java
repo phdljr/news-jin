@@ -19,8 +19,8 @@ public enum CustomException {
     PRIVATE_CARD_ACCESS(400, "작성자만 조회할 수 있습니다."),
     BAD_LOGIN(400, "회원을 찾을 수 없습니다.");
 
-    private int statusCode;
-    private String message;
+    private final int statusCode;
+    private final String message;
 
     CustomException(final int statusCode, final String message) {
         this.statusCode = statusCode;

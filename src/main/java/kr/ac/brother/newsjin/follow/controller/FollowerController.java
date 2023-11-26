@@ -23,7 +23,7 @@ public class FollowerController {
     @GetMapping("/follower")
     public ResponseEntity<List<FollowResponseDto>> getFollowers(
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         List<FollowResponseDto> responseDto = followerService.getFollowers(userDetails.getUser());
         return ResponseEntity.ok(responseDto);
     }
@@ -32,7 +32,7 @@ public class FollowerController {
     public ResponseEntity<String> deleteFollower(
         @PathVariable("followingId") Long followingId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         followerService.deleteFollower(followingId, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }

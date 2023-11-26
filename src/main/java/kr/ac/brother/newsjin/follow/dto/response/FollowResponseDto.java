@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class FollowResponseDto {
+
     private Long userId;
     private String username;
     private String nickname;

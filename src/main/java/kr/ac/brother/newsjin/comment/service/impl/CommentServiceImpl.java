@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
+
     // CommentRepository 인스턴스를 주입받음 (생성자 주입)
     private final CommentRepository commentRepository;
     // 게시글을 가져오기위해 BoardRepository 와 연결
@@ -24,15 +25,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     // 댓글을 생성하는 메서드 (매개변수로 클라이언트 요청, 유저데이터, 게시글 Id)
-    public CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user, Long boardId) {
+    public CommentResponseDTO createComment(CommentRequestDTO commentRequestDTO, User user,
+        Long boardId) {
         // board 에 넣어줄  boardRepository 안에 있는 boardId 를 찾아서(findById) 가져와라(get)
         Board board = boardRepository.findById(boardId).orElseThrow(NotFoundCommentException::new);
         // Comment 엔터티를 빌더 패턴을 사용하여 생성
         Comment comment = Comment.builder()
-                .content(commentRequestDTO.getContent())
-                .user(user)
-                .board(board)
-                .build();
+            .content(commentRequestDTO.getContent())
+            .user(user)
+            .board(board)
+            .build();
 
         // 생성한 Comment 엔터티를 저장하고 저장된 엔터티를 받아옴
         comment = commentRepository.save(comment);
@@ -46,8 +48,10 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     // 댓글을 수정하는 메서드 (매개변수로 클라이언트 요청, 유저데이터, 게시글 Id, 댓글 Id)
-    public CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user, Long commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
+    public CommentResponseDTO modifyComment(CommentRequestDTO commentRequestDTO, User user,
+        Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(NotFoundCommentException::new);
         // Board board = boardRepository.findById(boardId).orElseThrow(NotFoundUserException::new); 아마 필요 없을거 같음..
 
         // userId 가 comment.User 의 id와 일치하지 않다면
@@ -68,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentResponseDTO deleteComment(User user, Long commentId) {
         // commentRepository(DB) 안에 있는 commentId(데이터) 를 찾아라(findById) 없다면 예외처리(orElseThrow)인 NotFoundCommentException를 실행해라
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(NotFoundCommentException::new);
+            .orElseThrow(NotFoundCommentException::new);
 
         Long userId = comment.getUser().getId();
 

@@ -81,7 +81,8 @@ class CommentLikeServiceImplTest {
         commentLikeService.likeComment(commentId, user);
 
         // then
-        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(user, commentId);
+        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(user,
+            commentId);
         assertThat(findCommentLike).isNotEmpty();
 
         CommentLike commentLike = findCommentLike.get();
@@ -104,7 +105,8 @@ class CommentLikeServiceImplTest {
         commentLikeService.unlikeComment(commentId, user);
 
         // then
-        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(user, commentId);
+        Optional<CommentLike> findCommentLike = commentLikeRepository.findByUserAndCommentId(user,
+            commentId);
         assertThat(findCommentLike).isEmpty();
     }
 }

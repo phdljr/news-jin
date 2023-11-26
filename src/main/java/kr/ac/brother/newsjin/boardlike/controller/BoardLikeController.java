@@ -22,7 +22,7 @@ public class BoardLikeController {
     public ResponseEntity<String> likeBoard(
         @PathVariable("boardId") Long boardId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         boardLikeService.likeBoard(boardId, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }
@@ -31,7 +31,7 @@ public class BoardLikeController {
     public ResponseEntity<String> unlikeBoard(
         @PathVariable("boardId") Long boardId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         boardLikeService.unlikeBoard(boardId, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }

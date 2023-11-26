@@ -1,5 +1,8 @@
 package kr.ac.brother.newsjin.board.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Optional;
 import kr.ac.brother.newsjin.board.dto.response.BoardResponseDto;
 import kr.ac.brother.newsjin.board.dto.response.BoardWithCommentResponseDto;
 import kr.ac.brother.newsjin.board.entity.Board;
@@ -13,10 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @SpringBootTest
@@ -34,23 +33,23 @@ class BoardServiceImplTest {
 
     private User insertUser() {
         User user = User.builder()
-                .username("testusername")
-                .password(passwordEncoder.encode("testpassword"))
-                .email("test@email.com")
-                .imageName("testimage")
-                .intro("testintro")
-                .nickname("testnickname")
-                .role(UserRole.USER)
-                .build();
+            .username("testusername")
+            .password(passwordEncoder.encode("testpassword"))
+            .email("test@email.com")
+            .imageName("testimage")
+            .intro("testintro")
+            .nickname("testnickname")
+            .role(UserRole.USER)
+            .build();
         return userRepository.save(user);
     }
 
     public Board insertBoard(User user) {
         Board board = Board.builder()
-                .title("testtitle")
-                .content("testcontent")
-                .user(user)
-                .build();
+            .title("testtitle")
+            .content("testcontent")
+            .user(user)
+            .build();
         return boardRepository.save(board);
     }
 

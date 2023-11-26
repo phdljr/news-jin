@@ -7,12 +7,12 @@ import lombok.Getter;
 @Getter
 public class CommentWithUserResponseDTO {
 
-    private Long id;
-    private String nickname;
-    private String content;
-    private Long likes;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private final Long id;
+    private final String nickname;
+    private final String content;
+    private final Long likes;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime modifiedAt;
 
     public CommentWithUserResponseDTO(Comment comment, Long likes) {
         this.id = comment.getId();

@@ -144,7 +144,7 @@ class UserServiceImplTest {
         assertThat(passwordEncoder.matches(changePassword, changedUser.getPassword()))
             .isEqualTo(true);
     }
-  
+
     @Test
     @DisplayName("회원 탈퇴를 한다.")
     public void withdrawTest() {

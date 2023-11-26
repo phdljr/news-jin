@@ -11,7 +11,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-
 import kr.ac.brother.newsjin.board.dto.request.BoardRequestDto;
 import kr.ac.brother.newsjin.comment.entity.Comment;
 import kr.ac.brother.newsjin.global.entity.BaseEntity;

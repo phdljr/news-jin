@@ -67,13 +67,14 @@ public class WebSecurityConfig {
         );
 
         http.authorizeHttpRequests(authorizeHttpRequests ->
-            authorizeHttpRequests
+                authorizeHttpRequests
 //                .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**")
 //                .permitAll()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/users/login", "/api/v1/users").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/boards/**").permitAll()
-                .anyRequest().authenticated()
+                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/v1/users/login", "/api/v1/users")
+                    .permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/boards/**").permitAll()
+                    .anyRequest().authenticated()
         );
 
         http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(
