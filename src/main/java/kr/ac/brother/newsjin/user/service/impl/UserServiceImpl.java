@@ -20,6 +20,7 @@ import kr.ac.brother.newsjin.user.exception.NotMatchCheckPassword;
 import kr.ac.brother.newsjin.user.exception.NotMatchConfirmationPhrase;
 import kr.ac.brother.newsjin.user.exception.NotMatchCurrentPassword;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
+import kr.ac.brother.newsjin.user.service.UserImageService;
 import kr.ac.brother.newsjin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserImageService userImageService;
 
     private static final String CONFIRMATION_PHRASE = "회원 탈퇴 진행을 확인했습니다.";
 
@@ -154,6 +156,7 @@ public class UserServiceImpl implements UserService {
             throw new NotMatchConfirmationPhrase();
         }
 
+        userImageService.deleteImage(user);
         userRepository.delete(loginUser);
     }
 }

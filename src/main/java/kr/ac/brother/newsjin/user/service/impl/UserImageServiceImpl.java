@@ -71,7 +71,7 @@ public class UserImageServiceImpl implements UserImageService {
             .orElseThrow(NotFoundUserException::new);
 
         if (user.getImageName() == null) {
-            throw new NoImageFileException();
+            return;
         }
 
         if (!amazonS3.doesObjectExist(bucketName, user.getImageName())) {
