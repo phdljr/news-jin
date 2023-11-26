@@ -5,6 +5,7 @@ import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
+import kr.ac.brother.newsjin.user.dto.request.UserWithdrawRequestDto;
 import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
@@ -20,10 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,8 +48,11 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> withdraw(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        userService.withdraw(userDetails.getUser());
+    public ResponseEntity<String> withdraw(
+        @RequestBody UserWithdrawRequestDto userWithdrawRequestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        userService.withdraw(userWithdrawRequestDto, userDetails.getUser());
         return ResponseEntity.ok("OK");
     }
 

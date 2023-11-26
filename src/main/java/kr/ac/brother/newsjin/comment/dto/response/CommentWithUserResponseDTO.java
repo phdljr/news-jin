@@ -19,7 +19,7 @@ public class CommentWithUserResponseDTO {
         this.content = comment.getContent();
         this.createdAt = comment.getCreateAt();
         this.modifiedAt = comment.getModifiedAt();
-        this.nickname = comment.getUser().getNickname();
+        this.nickname = comment.getUser() == null ? "탈퇴한 사용자" : comment.getUser().getNickname();
         this.likes = likes;
     }
 }

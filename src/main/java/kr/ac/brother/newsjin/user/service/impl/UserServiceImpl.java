@@ -5,6 +5,7 @@ import kr.ac.brother.newsjin.user.dto.request.IntroRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.NicknameRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.PasswordRequestDto;
 import kr.ac.brother.newsjin.user.dto.request.SignUpRequestDto;
+import kr.ac.brother.newsjin.user.dto.request.UserWithdrawRequestDto;
 import kr.ac.brother.newsjin.user.dto.response.IntroResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.NicknameResponseDto;
 import kr.ac.brother.newsjin.user.dto.response.SignUpResponseDto;
@@ -16,6 +17,7 @@ import kr.ac.brother.newsjin.user.exception.AlreadyExistNicknameException;
 import kr.ac.brother.newsjin.user.exception.AlreadyExistUsernameException;
 import kr.ac.brother.newsjin.user.exception.NotFoundUserException;
 import kr.ac.brother.newsjin.user.exception.NotMatchCheckPassword;
+import kr.ac.brother.newsjin.user.exception.NotMatchConfirmationPhrase;
 import kr.ac.brother.newsjin.user.exception.NotMatchCurrentPassword;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
 import kr.ac.brother.newsjin.user.service.UserService;
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private static final String CONFIRMATION_PHRASE = "회원 탈퇴 진행을 확인했습니다.";
 
     @Override
     public SignUpResponseDto signUp(final SignUpRequestDto requestDto) {
@@ -135,11 +139,19 @@ public class UserServiceImpl implements UserService {
 
         loginUser.updatePassword(passwordEncoder.encode(passwordRequestDto.getNewPassword()));
     }
-  
+
     @Override
-    public void withdraw(final User user) {
+    public void withdraw(final UserWithdrawRequestDto userWithdrawRequestDto, final User user) {
         User loginUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
+
+        if(!passwordEncoder.matches(userWithdrawRequestDto.getPassword(), user.getPassword())){
+            throw new NotMatchCurrentPassword();
+        }
+
+        if(!userWithdrawRequestDto.getConfirmationPhrase().equals(CONFIRMATION_PHRASE)){
+            throw new NotMatchConfirmationPhrase();
+        }
 
         userRepository.delete(loginUser);
     }
