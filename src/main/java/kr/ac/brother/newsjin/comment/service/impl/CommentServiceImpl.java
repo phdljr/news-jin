@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
         }
         // 일치한다면 if문이 실행되지 않고 이어서 실행
         // comment 를 수정함
-        comment.modifyContent(comment.getContent());
+        comment.modifyContent(commentRequestDTO.getContent());
 
         return new CommentResponseDTO(comment);
     }
