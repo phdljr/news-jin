@@ -1,6 +1,7 @@
 package kr.ac.brother.newsjin.board.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import kr.ac.brother.newsjin.board.dto.request.BoardRequestDto;
 import kr.ac.brother.newsjin.board.dto.response.BoardResponseDto;
@@ -16,6 +17,10 @@ import kr.ac.brother.newsjin.boardlike.entity.BoardLike;
 import kr.ac.brother.newsjin.boardlike.repository.BoardLikeRepository;
 import kr.ac.brother.newsjin.comment.dto.response.CommentWithUserResponseDTO;
 import kr.ac.brother.newsjin.commentlike.repository.CommentLikeRepository;
+import kr.ac.brother.newsjin.follow.dto.response.FollowResponseDto;
+import kr.ac.brother.newsjin.follow.service.FollowerService;
+import kr.ac.brother.newsjin.follow.service.FollowingService;
+import kr.ac.brother.newsjin.global.entity.BaseEntity;
 import kr.ac.brother.newsjin.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +35,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     private final BoardLikeRepository boardLikeRepository;
     private final CommentLikeRepository commentLikeRepository;
+    private final FollowingService followingService;
 
     @Override
     public BoardResponseDto createBoard(BoardRequestDto boardRequestDto, User user) {
@@ -156,8 +162,15 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 팔로우한 사용자의 게시글 조회
+    // 날짜별로 정렬
     private List<Board> findByFollow(User user) {
-        return null;
+        List<Board> boards = new ArrayList<>();
+        for (FollowResponseDto follow : followingService.getFollowings(user)) {
+            boards.addAll(boardRepository.findByUserId(follow.getUserId()));
+        }
+
+        boards.sort(Comparator.comparing(BaseEntity::getCreateAt).reversed());
+        return boards;
     }
 
 }

@@ -70,7 +70,7 @@ public class FollowingServiceImpl implements FollowingService {
         return followRepository.findByUser(user)
             .stream()
             .map(follow -> FollowResponseDto.builder()
-                .id(follow.getFollowingUser().getId())
+                .userId(follow.getFollowingUser().getId())
                 .username(follow.getFollowingUser().getUsername())
                 .nickname(follow.getFollowingUser().getNickname())
                 .build())

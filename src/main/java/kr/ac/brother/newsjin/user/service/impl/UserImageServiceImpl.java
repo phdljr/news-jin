@@ -9,6 +9,7 @@ import kr.ac.brother.newsjin.user.entity.User;
 import kr.ac.brother.newsjin.user.exception.FailDeleteImageException;
 import kr.ac.brother.newsjin.user.exception.FailUploadImageException;
 import kr.ac.brother.newsjin.user.exception.NoImageFileException;
+import kr.ac.brother.newsjin.user.exception.NoImageTypeException;
 import kr.ac.brother.newsjin.user.exception.NotFoundUserException;
 import kr.ac.brother.newsjin.user.repository.UserRepository;
 import kr.ac.brother.newsjin.user.service.UserImageService;
@@ -40,7 +41,7 @@ public class UserImageServiceImpl implements UserImageService {
             .orElseThrow(NotFoundUserException::new);
 
         if (!isImageType(multipartFile)) {
-            throw new NoImageFileException();
+            throw new NoImageTypeException();
         }
 
         String fileName = findUser.getUsername() + "_" + UUID.randomUUID();
@@ -50,8 +51,10 @@ public class UserImageServiceImpl implements UserImageService {
         metadata.setContentType(multipartFile.getContentType());
 
         try {
-            if (amazonS3.doesObjectExist(bucketName, user.getImageName())) {
-                deleteImage(bucketName, user.getImageName());
+            if (user.getImageName() != null) {
+                if (amazonS3.doesObjectExist(bucketName, user.getImageName())) {
+                    deleteImage(bucketName, user.getImageName());
+                }
             }
             amazonS3.putObject(bucketName, fileName, multipartFile.getInputStream(), metadata);
         } catch (IOException e) {
@@ -67,8 +70,12 @@ public class UserImageServiceImpl implements UserImageService {
         User findUser = userRepository.findById(user.getId())
             .orElseThrow(NotFoundUserException::new);
 
-        if(!amazonS3.doesObjectExist(bucketName, user.getImageName())){
-            return;
+        if (user.getImageName() == null) {
+            throw new NoImageFileException();
+        }
+
+        if (!amazonS3.doesObjectExist(bucketName, user.getImageName())) {
+            throw new NoImageFileException();
         }
 
         deleteImage(bucketName, user.getImageName());
@@ -76,7 +83,7 @@ public class UserImageServiceImpl implements UserImageService {
         findUser.deleteImage();
     }
 
-    private void deleteImage(String bucketName, String imageName){
+    private void deleteImage(String bucketName, String imageName) {
         try {
             amazonS3.deleteObject(bucketName, imageName);
         } catch (Exception e) {
