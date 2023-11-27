@@ -8,6 +8,7 @@ class NewsJinApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
